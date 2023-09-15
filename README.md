@@ -7,7 +7,7 @@ The `train-model` folder contains the code to create and train the model. It run
 
 The `digit-image-app` folder contains the code to run a web app where you can handraw a digit (using mousr or trackpad). The web app is an IBM Code Engine web application. The application loads with an `init()` that downloads the model file from IBM COS and the loads the model into memory.
 
-    Note: this is for demonstration purposes only and is not really the type of architecture you use in production. Typically after creating the model is served on some ML infrastructure e.g. Seldon is used in the Open Data Hub open source project (which is the upstream OSS for Red Hat OpenShift Data Science).
+> Note: this is for demonstration purposes only and is not really the type of architecture you use in production. Typically after creating the model is served on some ML infrastructure e.g. Seldon is used in the Open Data Hub open source project (which is the upstream OSS for Red Hat OpenShift Data Science).
 
 ## MNIST Image Project
 The MNIST Image dataset has been provided in an easy-to-use CSV format. You can get them [here](https://www.kaggle.com/datasets/oddrationale/mnist-in-csv).
