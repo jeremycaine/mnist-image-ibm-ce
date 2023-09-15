@@ -9,6 +9,11 @@ The `digit-image-app` folder contains the code to run a web app where you can ha
 
     Note: this is for demonstration purposes only and is not really the type of architecture you use in production. Typically after creating the model is served on some ML infrastructure e.g. Seldon is used in the Open Data Hub open source project (which is the upstream OSS for Red Hat OpenShift Data Science).
 
+## MNIST Image Project
+The MNIST Image dataset has been provided in an easy-to-use CSV format. You can get them [here](https://www.kaggle.com/datasets/oddrationale/mnist-in-csv).
+
+The original Yann LeCun MNIST database site is [here](http://yann.lecun.com/exdb/mnist/) but the data formatting is considered not for beginners.
+
 ## Local Apple Mac on Metal
 For those using Apple Macbook and M1 chip you need to setup Tensorflow accordingly.
 https://developer.apple.com/metal/tensorflow-plugin/
@@ -28,7 +33,8 @@ export COS_API_KEY_ID=xxx
 ```
 This bucket contains the data files to train and test the model.
 ```
-
+mnist_train.csv
+mnist_test.csv
 ```
 
 ## Production server
