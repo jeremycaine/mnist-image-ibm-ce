@@ -135,6 +135,8 @@ Next, you can launch the image recognition web app. In your IBM Code Engine proj
 
 You can see it in action [here](https://digit-image.17bu6les2m8a.us-south.codeengine.appdomain.cloud).
 
-To use the app, use your trackpad or mouse to hand draw a digit between 
+To use the app, use your trackpad or mouse to hand draw a digit between 0 and 9, then click Send. The model is called and a prediction as to what digit you drew comes bacl. Hit Clear to start again.
+
+> Remember this is a serverless environment. If you don't use your app for some time then IBM Code Engine will de-stage it. Then when you go to the URL and demand the app it will get loaded, and in that process it is reloading the model into memory so that the prediction call can be made on it.
 
 
