@@ -46,13 +46,15 @@ def init():
             # Get the pathlib.Path object
             path = pathlib.Path(f.name)
 
-        # and file name
-        fn = path.name
+            # and file name
+            fn = path.name
 
-        cos_cli.download_file(bucket_name, h5_file_name, fn)    
-        with h5py.File(fn, 'r') as hdf_file:
-            model = keras.models.load_model(hdf_file)
-    
+            cos_cli.download_file(bucket_name, h5_file_name, fn)    
+            with h5py.File(fn, 'r') as hdf_file:
+                model = keras.models.load_model(hdf_file)
+            
+            os.remove(fn)
+        
         log("Loaded Model from COS")
         return model
     except ClientError as be:

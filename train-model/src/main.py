@@ -35,13 +35,14 @@ def get_file(file_name):
         # Create a temporary file
         with tempfile.NamedTemporaryFile() as f:
             # Get the pathlib.Path object
+            print("download from COS into temp file: ", f.name)
             path = pathlib.Path(f.name)
 
-        # and file name
-        fn = path.name
+            # and file name
+            fn = path.name
 
-        cos_cli.download_file(bucket_name, file_name, fn) 
-        return fn
+            cos_cli.download_file(bucket_name, file_name, fn) 
+            return fn
     except ClientError as be:
         log(be)
         sys.exit(1)
@@ -68,6 +69,7 @@ def save_file(path_object, file_name):
         log("Unable to put file: {0}".format(e))
         sys.exit(1)
 
+log("start")
 
 # create cloud objec storage connection
 cos_cli = ibm_boto3.client("s3",
@@ -78,15 +80,20 @@ cos_cli = ibm_boto3.client("s3",
     endpoint_url=COS_ENDPOINT
 )
 
-test_df: pd.DataFrame = pd.read_csv(get_file(test_csv), header=None)
+test_file = get_file(test_csv)
+print(test_file)
+test_df: pd.DataFrame = pd.read_csv(test_file, header=None)
 test_features: np.ndarray = test_df.loc[:, 1:].values
+
 test_features = test_features.reshape((test_features.shape[0], 28, 28, 1))
 test_features = test_features / 255.0
 test_labels: np.ndarray = test_df[0].values
 
 # -- Build the model
-train_df: pd.DataFrame = pd.read_csv(get_file(train_csv), header=None)
-test_df: pd.DataFrame = pd.read_csv(get_file(test_csv), header=None)
+train_file = get_file(test_csv)
+print(train_file)
+train_df: pd.DataFrame = pd.read_csv(train_file, header=None)
+#test_df: pd.DataFrame = pd.read_csv(get_file(test_csv), header=None)
 log("data loaded")
 
 # split data set, taking off the labels e.g. '7' (first element), from the others 
@@ -148,11 +155,17 @@ model.fit(train_features, train_labels, epochs=3, verbose=0)
 model.evaluate(test_features, test_labels)
 
 # If you want to save the model in its current state in HDF5 format, you would use the following code syntax:
-log("....saving")
-with tempfile.NamedTemporaryFile(suffix='.h5', mode='w', delete=False) as temp_file:
-    path_object = pathlib.Path(temp_file.name)
-    model.save(temp_file.name, overwrite=True, include_optimizer=True)
+log("saving...")
+with tempfile.NamedTemporaryFile(suffix='.h5', mode='w', delete=False) as f:
+    path_object = pathlib.Path(f.name)
+    model.save(f.name, overwrite=True, include_optimizer=True)
     save_file(path_object, h5_file_name)
 
+# cleanup
+log("cleaning up...")
+test_df = None
+train_df = None
+os.remove(test_file)
+os.remove(train_file)
 
 log("complete")
