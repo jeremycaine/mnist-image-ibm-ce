@@ -1,9 +1,6 @@
 train-model/src/tmp*
-train-model/src/temp*
 digit-image-app/src/tmp*
-digit-image-app/src/temp*
 *.keras
-
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

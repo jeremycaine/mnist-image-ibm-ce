@@ -90,7 +90,6 @@ cos_cli = ibm_boto3.client("s3",
     config=Config(signature_version="oauth"),
     endpoint_url=COS_ENDPOINT
 )
-get_buckets()
 
 global model
 model = init()
@@ -98,10 +97,6 @@ model = init()
 @app.route('/', methods=['GET'])
 def index():
     return flask.render_template("mnist.html")
-
-@app.route('/upload', methods=['POST'])
-def uploade_file():
-    return flask.render_template("upload.html")
 
 @app.route('/image', methods=['POST'])
 def image():

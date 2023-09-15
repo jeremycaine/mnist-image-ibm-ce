@@ -16,7 +16,7 @@ RUN pip install -U "pip>=19.3.1" && \
 USER 1001
 
 ## 3. Image identification
-LABEL name="jeremycaine/mnist-image-ml-app/digit-image" \
+LABEL name="jeremycaine/mnist-image-ibm-ce/digit-image" \
       vendor="Acme, Inc." \
       version="1.2.3" \
       release="45" \
