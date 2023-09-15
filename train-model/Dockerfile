@@ -48,8 +48,5 @@ COPY src/ ./
 ENV PORT 8080
 EXPOSE 8080
 
-# Gunicorn https://docs.gunicorn.org/en/latest/design.html#how-many-workers
-ENV WORKERS 1
-
 ## Run script uses standard ways to run the application
-CMD gunicorn -w ${WORKERS} -b :${PORT} main:app
+CMD python main.py
