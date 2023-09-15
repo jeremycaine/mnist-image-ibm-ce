@@ -39,6 +39,22 @@ h5_file_name = os.getenv('H5_FILE_NAME', 'mnist-model.h5')
 def log(e):
     print("{0}\n".format(e))
 
+# Retrieve the list of available buckets
+def get_buckets():
+    print("Retrieving list of buckets")
+    try:
+        bucket_list = cos_cli.list_buckets()
+        for bucket in bucket_list["Buckets"]:
+            print("Bucket Name: {0}".format(bucket["Name"]))
+        
+        log("done")
+    except ClientError as be:
+        log(be)
+        sys.exit(1)
+    except Exception as e:
+        log("Unable to retrieve list buckets: {0}".format(e))
+        sys.exit(1)
+
 def init(): 
     try:
         # Create a temporary file
@@ -51,7 +67,8 @@ def init():
 
             cos_cli.download_file(bucket_name, h5_file_name, fn)    
             with h5py.File(fn, 'r') as hdf_file:
-                model = keras.models.load_model(hdf_file)
+                print(hdf_file)
+                model = keras.models.load_model(hdf_file, compile=False)
             
             os.remove(fn)
         
@@ -64,6 +81,7 @@ def init():
         log("Unable to get file: {0}".format(e))
         sys.exit(1)
 
+log("get cos connection ...")
 # create cloud objec storage connection
 cos_cli = ibm_boto3.client("s3",
     ibm_api_key_id=COS_API_KEY_ID,
@@ -72,6 +90,7 @@ cos_cli = ibm_boto3.client("s3",
     config=Config(signature_version="oauth"),
     endpoint_url=COS_ENDPOINT
 )
+get_buckets()
 
 global model
 model = init()
