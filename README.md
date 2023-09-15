@@ -3,9 +3,11 @@ Train and use the MNIST image prediction model in the IBM Code Engine environmen
 
 This project creates and trains a machine learning model that predicts what number a handrawn digit (0-9) is. It is built using the code and data sets of the "hello world" of ML - the MNIST image dataset.
 
-The `train-model` folder contains the code to create and train the model. It runs as a Job in IBM Cloud Engine and stores the output model in IBM Cloud Object Storage (COS).
+The `train-model` folder contains the code to create and train the model. It runs as a Job in IBM Cloud Engine and stores the output model in IBM Cloud Object Storage (COS). IBM Code Engine serverless environment is pure x86, not GPUs are used for training the model. For MNIST image, the model and training data is small enough that this simple x86 environment works well.
 
 The `digit-image-app` folder contains the code to run a web app where you can handraw a digit (using mousr or trackpad). The web app is an IBM Code Engine web application. The application loads with an `init()` that downloads the model file from IBM COS and the loads the model into memory.
+
+A serverless environment is useful for simple build and hosting of application for experimentation when you might not have sufficient resources in your local environment. 
 
 > Note: this is for demonstration purposes only and is not really the type of architecture you use in production. Typically after creating the model is served on some ML infrastructure e.g. Seldon is used in the Open Data Hub open source project (which is the upstream OSS for Red Hat OpenShift Data Science).
 
@@ -13,6 +15,8 @@ The `digit-image-app` folder contains the code to run a web app where you can ha
 The MNIST Image dataset has been provided in an easy-to-use CSV format. You can get them [here](https://www.kaggle.com/datasets/oddrationale/mnist-in-csv).
 
 The original Yann LeCun MNIST database site is [here](http://yann.lecun.com/exdb/mnist/) but the data formatting is considered not for beginners.
+
+The code to build and train this Deep Learning model - a Convolutional Neural Net (CNN) - is taken from [this Red Hat tutorial](https://developers.redhat.com/learn/openshift-data-science/how-create-tensorflow-model)
 
 ## Local Apple Mac on Metal
 For those using Apple Macbook and M1 chip you need to setup Tensorflow accordingly.
@@ -127,6 +131,10 @@ From the cloud console and the job `train-model` submit the job. You can watch i
 
 Then, check that the model file `mnist-model.h5` is in your COS bucket.
 
-Next, you can launch the image recognition web app. Go to application `digit-image`. 
+Next, you can launch the image recognition web app. In your IBM Code Engine project go to application `digit-image`, click on Test Application and you will see link to 'Application URL'. 
+
+You can see it in action [here](https://digit-image.17bu6les2m8a.us-south.codeengine.appdomain.cloud).
+
+To use the app, use your trackpad or mouse to hand draw a digit between 
 
 
