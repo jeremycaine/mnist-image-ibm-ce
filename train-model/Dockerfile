@@ -10,7 +10,6 @@ COPY src/requirements.txt ./
 # Install the dependencies
 RUN pip install -U "pip>=19.3.1" && \
     pip install tensorflow \
-    pip install tensorrt \
     pip install --no-cache-dir -r requirements.txt
 
 ## 2. Non-root, arbitrary user IDs

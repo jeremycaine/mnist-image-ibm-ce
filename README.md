@@ -26,6 +26,10 @@ From your IBM Cloud account you need to create a COS bucket in your COS service 
 ```
 export COS_API_KEY_ID=xxx
 ```
+This bucket contains the data files to train and test the model.
+```
+
+```
 
 ## Production server
 Production Python apps should use a WSGI HTTP server. The `digit-image-app` uses  [Gunicorn](https://gunicorn.org).
@@ -91,10 +95,13 @@ ibmcloud ce configmap create --name mnist-image-ibm-ce-cm \
 Job to train image prediction model
 ```
 # create app first time
-ibmcloud ce job create --name train-model --src https://github.com/jeremycaine/mnist-image-ibm-ce --bcdr train-model --str dockerfile --env-from-secret caine-cos-api-key --env-from-configmap mnist-image-ibm-ce-cm --cpu 2 --memory 16G
+ibmcloud ce job create --name train-model --src https://github.com/jeremycaine/mnist-image-ibm-ce --bcdr train-model --str dockerfile --env-from-secret caine-cos-api-key --env-from-configmap mnist-image-ibm-ce-cm --size large
 
 # or, rebuild after git commit
 ibmcloud ce job update --name train-model --rebuild
+
+# when you want to delete it
+ibmcloud ce job delete --name train-model
 ```
 
 ### Digit Image 
