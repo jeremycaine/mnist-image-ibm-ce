@@ -133,6 +133,7 @@ def image():
         list(inverted_image.tobytes())).reshape((1, 28, 28, 1))
 
     scaled_image_array = reshaped_image / 255.0
+    log(type(scaled_image_array))
 
     # now call the model to predict what the digit the image is
     out = model.predict(scaled_image_array)

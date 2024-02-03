@@ -5,7 +5,7 @@ This project creates and trains a machine learning model that predicts what numb
 
 The `train-model` folder contains the code to create and train the model. It runs as a Job in IBM Cloud Engine and stores the output model in IBM Cloud Object Storage (COS). IBM Code Engine serverless environment is pure x86, not GPUs are used for training the model. For MNIST image, the model and training data is small enough that this simple x86 environment works well.
 
-The `digit-image-app` folder contains the code to run a web app where you can handraw a digit (using mousr or trackpad). The web app is an IBM Code Engine web application. The application loads with an `init()` that downloads the model file from IBM COS and the loads the model into memory.
+The `digit-image-app` folder contains the code to run a web app where you can handraw a digit (using mouse or trackpad). The web app is an IBM Code Engine web application. The application loads with an `init()` that downloads the model file from IBM COS and the loads the model into memory.
 
 A serverless environment is useful for simple build and hosting of application for experimentation when you might not have sufficient resources in your local environment. 
 
@@ -17,6 +17,15 @@ The MNIST Image dataset has been provided in an easy-to-use CSV format. You can 
 The original Yann LeCun MNIST database site is [here](http://yann.lecun.com/exdb/mnist/) but the data formatting is considered not for beginners.
 
 The code to build and train this Deep Learning model - a Convolutional Neural Net (CNN) - is taken from [this Red Hat tutorial](https://developers.redhat.com/learn/openshift-data-science/how-create-tensorflow-model)
+
+## Local Install
+from `mnist-image-ibm-ce` directory go to `train-model`, `digit-image-app` and the `src` directory in each and run `pip install -r requirements.txt`
+```
+# e.g. if you are using conda to manage your python environment
+conda activate py11
+cd ~/train-mode/src
+pip install -r requirements.txt
+```
 
 ## Local Apple Mac on Metal
 For those using Apple Macbook and M1 chip you need to setup Tensorflow accordingly.
